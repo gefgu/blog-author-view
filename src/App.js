@@ -6,6 +6,7 @@ import DashboardPage from "./components/DashboardPage";
 import Navbar from "./components/Navbar";
 import { AuthContext } from "./contexts/AuthContext";
 import Theme from "./theme";
+import "./styles/index.css";
 
 function App() {
   const [token, setToken] = useState(null);
