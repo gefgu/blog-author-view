@@ -1,33 +1,30 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Button from "../styled-components/Button";
 import Form from "../styled-components/Form";
 import Heading from "../styled-components/Heading";
 import Input from "../styled-components/Input";
+import Paragraph from "../styled-components/Paragraph";
 
-function AuthenticationPage({ setToken }) {
+function AuthenticationPage({ handleLogin }) {
   const usernameInput = useRef(null);
   const passwordInput = useRef(null);
 
-  const handleLogin = async (e) => {
+  const [errorMessage, setErrorMessage] = useState();
+
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const jsonBody = {
-      username: usernameInput.current.value,
-      password: passwordInput.current.value,
-    };
-    const response = await fetch(
-      `${process.env.REACT_APP_API_URL}/users/login`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(jsonBody),
-      }
+    const loginIsSuccessful = await handleLogin(
+      usernameInput.current.value,
+      passwordInput.current.value
     );
-    const data = await response.json();
-    console.log(data);
+    console.log(loginIsSuccessful);
+    if (!loginIsSuccessful) {
+      setErrorMessage("Unauthorized.");
+    }
   };
 
   return (
-    <Form onSubmit={handleLogin}>
+    <Form onSubmit={handleFormSubmit}>
       <Heading>Log In</Heading>
       <Input placeholder="Username" name="username" ref={usernameInput} />
       <Input
@@ -37,6 +34,7 @@ function AuthenticationPage({ setToken }) {
         ref={passwordInput}
       />
       <Button>Log In</Button>
+      {errorMessage && <Paragraph errorMessage>{errorMessage}</Paragraph>}
     </Form>
   );
 }

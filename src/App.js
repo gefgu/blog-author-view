@@ -26,6 +26,34 @@ function App() {
     setToken(null);
   };
 
+  const handleLogin = async (username, password) => {
+    const jsonBody = {
+      username: username,
+      password: password,
+    };
+    const response = await fetch(
+      `${process.env.REACT_APP_API_URL}/users/login`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(jsonBody),
+      }
+    );
+    const data = await response.json();
+    const userIsAdmin = await isAdmin(data?.token);
+    if (userIsAdmin) {
+      setToken(data.token);
+      return true;
+    }
+    return false;
+  };
+
+  const isAdmin = async (token) => {
+    if (!token) return false;
+    const data = await getUser(token);
+    return data?.admin;
+  };
+
   useEffect(() => {
     if (token === null) {
       setToken(JSON.parse(localStorage.getItem("token")));
@@ -47,7 +75,7 @@ function App() {
 
   return (
     <ThemeProvider theme={Theme}>
-      <AuthenticationPage setToken={setToken} />
+      <AuthenticationPage handleLogin={handleLogin} />
     </ThemeProvider>
   );
 }
