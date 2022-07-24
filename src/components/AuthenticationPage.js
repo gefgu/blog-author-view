@@ -17,9 +17,10 @@ function AuthenticationPage({ handleLogin }) {
       usernameInput.current.value,
       passwordInput.current.value
     );
-    console.log(loginIsSuccessful);
     if (!loginIsSuccessful) {
       setErrorMessage("Unauthorized.");
+    } else {
+      setErrorMessage("");
     }
   };
 
