@@ -2,6 +2,12 @@ import { DateTime } from "luxon";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
+import ContentContainer from "../styled-components/ContentContainer";
+import Header from "../styled-components/Header";
+import OuterWrapper from "../styled-components/OuterWrapper";
+import Subtitle from "../styled-components/Subtitle";
+import Title from "../styled-components/Title";
+import Divider from "../styled-components/Divider";
 
 function DashboardPage() {
   const { user } = useContext(AuthContext);
@@ -44,7 +50,26 @@ function DashboardPage() {
     return () => setPosts(null);
   }, []);
 
-  return <h1>Hi!</h1>;
+  return (
+    <OuterWrapper>
+      <Header>
+        <Title>Blog</Title>
+        <Subtitle>Thougths, stories and ideas.</Subtitle>
+      </Header>
+      <ContentContainer>
+        <Divider />
+        {posts &&
+          posts.map((post) => {
+            return (
+              <div key={post._id}>
+                {/* <PostPreview post={post} /> */}
+                <Divider />
+              </div>
+            );
+          })}
+      </ContentContainer>
+    </OuterWrapper>
+  );
 }
 
 export default DashboardPage;
