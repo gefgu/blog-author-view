@@ -1,10 +1,12 @@
+import { ThemeProvider } from "styled-components";
 import AuthenticationPage from "./components/AuthenticationPage";
+import Theme from "./theme";
 
 function App() {
   return (
-    <div>
+    <ThemeProvider theme={Theme}>
       <AuthenticationPage />
-    </div>
+    </ThemeProvider>
   );
 }
 
