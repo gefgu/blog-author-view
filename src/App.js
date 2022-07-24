@@ -1,5 +1,11 @@
+import AuthenticationPage from "./components/AuthenticationPage";
+
 function App() {
-  return <h1>Hello World!</h1>
+  return (
+    <div>
+      <AuthenticationPage />
+    </div>
+  );
 }
 
 export default App;
