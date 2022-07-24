@@ -7,7 +7,7 @@ import Flex from "../styled-components/Flex";
 import Nav from "../styled-components/Nav";
 import SubHeading from "../styled-components/SubHeading";
 
-function Navbar({ logOut, isDarkTheme, setIsDarkTheme }) {
+function Navbar({ logOut }) {
   const { user } = useContext(AuthContext);
 
   return (
@@ -27,7 +27,7 @@ function Navbar({ logOut, isDarkTheme, setIsDarkTheme }) {
               <Button>Log In</Button>
             </Link>
           </Anchor>
-          <Anchor >
+          <Anchor>
             <Link to="/signup">
               <Button>Sign Up</Button>
             </Link>

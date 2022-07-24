@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import AuthenticationPage from "./components/AuthenticationPage";
+import DashboardPage from "./components/DashboardPage";
 import Navbar from "./components/Navbar";
 import { AuthContext } from "./contexts/AuthContext";
 import Theme from "./theme";
@@ -83,8 +84,9 @@ function App() {
           <Navbar logOut={logOut} />
 
           <Routes>
+            <Route path="/" element={<DashboardPage />} />
             <Route
-              path="/"
+              path="/login"
               element={<AuthenticationPage handleLogin={handleLogin} />}
             />
           </Routes>

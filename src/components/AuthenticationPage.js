@@ -5,7 +5,23 @@ import Heading from "../styled-components/Heading";
 import Input from "../styled-components/Input";
 import Paragraph from "../styled-components/Paragraph";
 
+import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext";
+
 function AuthenticationPage({ handleLogin }) {
+  const { user } = useContext(AuthContext);
+
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user?.admin) {
+      navigate("/login");
+    } else {
+      navigate("/");
+    }
+  }, [user]);
+
   const usernameInput = useRef(null);
   const passwordInput = useRef(null);
 
