@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import AuthenticationPage from "./components/AuthenticationPage";
+import Navbar from "./components/Navbar";
 import { AuthContext } from "./contexts/AuthContext";
 import Theme from "./theme";
 
@@ -77,7 +79,16 @@ function App() {
   return (
     <AuthContext.Provider value={{ user, token }}>
       <ThemeProvider theme={Theme}>
-        <AuthenticationPage handleLogin={handleLogin} />
+        <BrowserRouter>
+          <Navbar logOut={logOut} />
+
+          <Routes>
+            <Route
+              path="/"
+              element={<AuthenticationPage handleLogin={handleLogin} />}
+            />
+          </Routes>
+        </BrowserRouter>
       </ThemeProvider>
     </AuthContext.Provider>
   );
