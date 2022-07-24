@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ThemeProvider } from "styled-components";
 import AuthenticationPage from "./components/AuthenticationPage";
+import { AuthContext } from "./contexts/AuthContext";
 import Theme from "./theme";
 
 function App() {
@@ -74,9 +75,11 @@ function App() {
   }, []);
 
   return (
-    <ThemeProvider theme={Theme}>
-      <AuthenticationPage handleLogin={handleLogin} />
-    </ThemeProvider>
+    <AuthContext.Provider value={{ user, token }}>
+      <ThemeProvider theme={Theme}>
+        <AuthenticationPage handleLogin={handleLogin} />
+      </ThemeProvider>
+    </AuthContext.Provider>
   );
 }
 
