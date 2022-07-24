@@ -47,7 +47,7 @@ function App() {
 
   return (
     <ThemeProvider theme={Theme}>
-      <AuthenticationPage />
+      <AuthenticationPage setToken={setToken} />
     </ThemeProvider>
   );
 }
