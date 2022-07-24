@@ -8,6 +8,7 @@ import OuterWrapper from "../styled-components/OuterWrapper";
 import Subtitle from "../styled-components/Subtitle";
 import Title from "../styled-components/Title";
 import Divider from "../styled-components/Divider";
+import PostPreview from "./PostPreview";
 
 function DashboardPage() {
   const { user } = useContext(AuthContext);
@@ -62,7 +63,7 @@ function DashboardPage() {
           posts.map((post) => {
             return (
               <div key={post._id}>
-                {/* <PostPreview post={post} /> */}
+                <PostPreview post={post} />
                 <Divider />
               </div>
             );
