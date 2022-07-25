@@ -35,10 +35,15 @@ function DashboardPage() {
 
     data = data.map((item) => {
       let newItem = item;
-      newItem.date = newItem.publishedDate || newItem.creationDate;
-      newItem.date = DateTime.fromISO(newItem.date).toLocaleString(
-        DateTime.DATE_MED
-      );
+      if (newItem?.publishedDate) {
+        newItem.publishedDate = DateTime.fromISO(
+          newItem.publishedDate
+        ).toLocaleString(DateTime.DATETIME_MED);
+      }
+
+      newItem.creationDate = DateTime.fromISO(
+        newItem.creationDate
+      ).toLocaleString(DateTime.DATE_MED);
       newItem.author = newItem.author.username;
       return newItem;
     });
