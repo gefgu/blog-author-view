@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { useContext, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import Button from "../styled-components/Button";
@@ -12,8 +12,15 @@ import Textarea from "../styled-components/Textarea";
 import Title from "../styled-components/Title";
 
 function PostCreationPage() {
-  const { token } = useContext(AuthContext);
+  const { user, token } = useContext(AuthContext);
+
   let navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user?.admin) {
+      navigate("/login");
+    }
+  }, [user]);
 
   const titleInput = useRef();
   const publishedDateInput = useRef();

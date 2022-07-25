@@ -13,8 +13,14 @@ import Title from "../styled-components/Title";
 import CommentBox from "./CommentBox";
 
 function PostPage() {
-  const { token } = useContext(AuthContext);
+  const { token, user } = useContext(AuthContext);
   let navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user?.admin) {
+      navigate("/login");
+    }
+  }, [user]);
 
   const postId = useParams().postId;
   const [post, setPost] = useState();
