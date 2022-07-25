@@ -1,6 +1,7 @@
 import { DateTime } from "luxon";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
+import Button from "../styled-components/Button";
 import Form from "../styled-components/Form";
 import Header from "../styled-components/Header";
 import Input from "../styled-components/Input";
@@ -14,6 +15,10 @@ function PostPage() {
   const [post, setPost] = useState();
   const [comments, setComments] = useState();
 
+  const titleInput = useRef();
+  const publishedDateInput = useRef();
+  const contentInput = useRef();
+
   const getPost = async () => {
     const response = await fetch(
       `${process.env.REACT_APP_API_URL}/posts/${postId}`
@@ -21,7 +26,6 @@ function PostPage() {
     let data = await response.json();
 
     data.author = data.author.username;
-    console.log(data);
     return data;
   };
 
@@ -57,17 +61,32 @@ function PostPage() {
     };
   }, []);
 
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      title: titleInput.current.value,
+      publishedDate: publishedDateInput.current.value,
+      content: contentInput.current.value,
+    };
+    console.log(data);
+  };
+
   return (
     <OuterWrapper>
       <Header>
         <Title>Post Edit Page</Title>
       </Header>
       {post && (
-        <Form>
+        <Form onSubmit={handleFormSubmit}>
           <Label>
             {" "}
             Title:
-            <Input name="title" placeholder="Title" defaultValue={post?.title} />
+            <Input
+              name="title"
+              placeholder="Title"
+              defaultValue={post?.title}
+              ref={titleInput}
+            />
           </Label>
           <Label>
             {" "}
@@ -80,6 +99,7 @@ function PostPage() {
               }-${DateTime.fromISO(post?.publishedDate).toLocaleString({
                 month: "2-digit",
               })}-${DateTime.fromISO(post?.publishedDate).day}`}
+              ref={publishedDateInput}
             />
           </Label>
           <Label>
@@ -89,8 +109,10 @@ function PostPage() {
               name="content"
               placeholder="Content"
               defaultValue={post?.content}
+              ref={contentInput}
             ></Textarea>
           </Label>
+          <Button>Submit</Button>
         </Form>
       )}
     </OuterWrapper>
