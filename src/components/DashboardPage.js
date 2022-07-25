@@ -1,7 +1,5 @@
 import { DateTime } from "luxon";
-import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../contexts/AuthContext";
+import { useEffect, useState } from "react";
 import ContentContainer from "../styled-components/ContentContainer";
 import Header from "../styled-components/Header";
 import OuterWrapper from "../styled-components/OuterWrapper";
@@ -12,16 +10,6 @@ import PostPreview from "./PostPreview";
 import Heading from "../styled-components/Heading";
 
 function DashboardPage() {
-  const { user } = useContext(AuthContext);
-
-  let navigate = useNavigate();
-
-  useEffect(() => {
-    if (!user?.admin) {
-      navigate("/login");
-    }
-  }, [user]);
-
   const [posts, setPosts] = useState();
 
   const getPosts = async () => {

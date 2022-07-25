@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import Anchor from "../styled-components/Anchor";
 import Button from "../styled-components/Button";
@@ -9,6 +9,14 @@ import SubHeading from "../styled-components/SubHeading";
 
 function Navbar({ logOut }) {
   const { user } = useContext(AuthContext);
+
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user?.admin) {
+      navigate("/login");
+    }
+  }, [user]);
 
   return (
     <Nav>
