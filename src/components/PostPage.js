@@ -1,6 +1,7 @@
 import { DateTime } from "luxon";
-import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useContext, useEffect, useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext";
 import Button from "../styled-components/Button";
 import Form from "../styled-components/Form";
 import Header from "../styled-components/Header";
@@ -11,12 +12,16 @@ import Textarea from "../styled-components/Textarea";
 import Title from "../styled-components/Title";
 
 function PostPage() {
+  const { token } = useContext(AuthContext);
+  let navigate = useNavigate();
+
   const postId = useParams().postId;
   const [post, setPost] = useState();
   const [comments, setComments] = useState();
 
   const titleInput = useRef();
   const publishedDateInput = useRef();
+  const publishedTimeInput = useRef();
   const contentInput = useRef();
 
   const getPost = async () => {
@@ -61,16 +66,23 @@ function PostPage() {
     };
   }, []);
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const data = {
+
+    const time = publishedTimeInput.current.value;
+    const date = DateTime.fromISO(
+      `${publishedDateInput.current.value}T${time.split(":")[0]}:${
+        time.split(":")[1]
+      }`
+    ).toISO(); // ISO time format
+
+    console.log(date);
+
+    const content = {
       title: titleInput.current.value,
-      publishedDate: DateTime.fromJSDate(
-        new Date(publishedDateInput.current.value)
-      ).toISO(),
+      publishedDate: date,
       content: contentInput.current.value,
     };
-    console.log(data);
   };
 
   return (
@@ -88,6 +100,7 @@ function PostPage() {
               placeholder="Title"
               defaultValue={post?.title}
               ref={titleInput}
+              required
             />
           </Label>
           <Label>
@@ -102,6 +115,20 @@ function PostPage() {
                 month: "2-digit",
               })}-${DateTime.fromISO(post?.publishedDate).day}`}
               ref={publishedDateInput}
+              required
+            />
+          </Label>
+          <Label>
+            {" "}
+            Published Time:
+            <Input
+              name="publishedTime"
+              type="time"
+              defaultValue={DateTime.fromISO(
+                post?.publishedDate
+              ).toLocaleString(DateTime.TIME_24_SIMPLE)}
+              ref={publishedTimeInput}
+              required
             />
           </Label>
           <Label>
@@ -112,6 +139,7 @@ function PostPage() {
               placeholder="Content"
               defaultValue={post?.content}
               ref={contentInput}
+              required
             ></Textarea>
           </Label>
           <Button>Submit</Button>
