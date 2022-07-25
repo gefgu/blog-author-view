@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar";
 import { AuthContext } from "./contexts/AuthContext";
 import Theme from "./theme";
 import "./styles/index.css";
+import PostPage from "./components/PostPage";
 
 function App() {
   const [token, setToken] = useState(null);
@@ -90,6 +91,7 @@ function App() {
               path="/login"
               element={<AuthenticationPage handleLogin={handleLogin} />}
             />
+            <Route path="/posts/:postId" element={<PostPage />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
