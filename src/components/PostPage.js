@@ -65,7 +65,9 @@ function PostPage() {
     e.preventDefault();
     const data = {
       title: titleInput.current.value,
-      publishedDate: publishedDateInput.current.value,
+      publishedDate: DateTime.fromJSDate(
+        new Date(publishedDateInput.current.value)
+      ).toISO(),
       content: contentInput.current.value,
     };
     console.log(data);
