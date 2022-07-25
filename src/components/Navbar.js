@@ -15,6 +15,11 @@ function Navbar({ logOut }) {
       <Anchor>
         <Link to="/">Home</Link>
       </Anchor>
+      <Anchor>
+        <Link to="/new-post">
+          <Button>+ Create New Post</Button>
+        </Link>
+      </Anchor>
       {user ? (
         <Flex>
           <SubHeading>{user.username}</SubHeading>

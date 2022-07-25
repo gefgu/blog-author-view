@@ -8,6 +8,7 @@ import { AuthContext } from "./contexts/AuthContext";
 import Theme from "./theme";
 import "./styles/index.css";
 import PostPage from "./components/PostPage";
+import PostCreationPage from "./components/PostCreationPage";
 
 function App() {
   const [token, setToken] = useState(null);
@@ -92,6 +93,7 @@ function App() {
               element={<AuthenticationPage handleLogin={handleLogin} />}
             />
             <Route path="/posts/:postId" element={<PostPage />} />
+            <Route path="/new-post" element={<PostCreationPage/>} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
