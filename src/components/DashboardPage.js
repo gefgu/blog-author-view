@@ -87,7 +87,7 @@ function DashboardPage() {
         <Heading>Published or Scheduled Posts</Heading>
         <Divider />
         {posts &&
-          posts.map((post) => {
+          posts.filter((post) => post?.publishedDate).map((post) => {
             return (
               <div key={post._id}>
                 <PostPreview post={post} updatePosts={updatePosts} />
