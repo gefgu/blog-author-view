@@ -2,10 +2,12 @@ import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Form from "../styled-components/Form";
+import Header from "../styled-components/Header";
 import Input from "../styled-components/Input";
 import Label from "../styled-components/Label";
 import OuterWrapper from "../styled-components/OuterWrapper";
 import Textarea from "../styled-components/Textarea";
+import Title from "../styled-components/Title";
 
 function PostPage() {
   const postId = useParams().postId;
@@ -57,19 +59,37 @@ function PostPage() {
 
   return (
     <OuterWrapper>
+      <Header>
+        <Title>Post Edit Page</Title>
+      </Header>
       {post && (
         <Form>
           <Label>
             {" "}
             Title:
-            <Input name="title" placeholder="Title" value={post?.title} />
+            <Input name="title" placeholder="Title" defaultValue={post?.title} />
+          </Label>
+          <Label>
+            {" "}
+            Published Date:
+            <Input
+              name="publishedDate"
+              type="date"
+              defaultValue={`${
+                DateTime.fromISO(post?.publishedDate).year
+              }-${DateTime.fromISO(post?.publishedDate).toLocaleString({
+                month: "2-digit",
+              })}-${DateTime.fromISO(post?.publishedDate).day}`}
+            />
           </Label>
           <Label>
             {" "}
             Content:
-            <Textarea name="content" placeholder="Content">
-              {post?.content}
-            </Textarea>
+            <Textarea
+              name="content"
+              placeholder="Content"
+              defaultValue={post?.content}
+            ></Textarea>
           </Label>
         </Form>
       )}
