@@ -83,6 +83,25 @@ function PostPage() {
       publishedDate: date,
       content: contentInput.current.value,
     };
+
+    const response = await fetch(
+      `${process.env.REACT_APP_API_URL}/posts/${postId}/`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(content),
+      }
+    );
+
+    const data = await response.json();
+    console.log(data);
+
+    if (data?.post) {
+      navigate(`/`);
+    }
   };
 
   return (
