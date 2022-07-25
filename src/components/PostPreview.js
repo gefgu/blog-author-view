@@ -6,8 +6,23 @@ import SubHeading from "../styled-components/SubHeading";
 import { Link } from "react-router-dom";
 import Button from "../styled-components/Button";
 import Flex from "../styled-components/Flex";
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 
-function PostPreview({ post }) {
+function PostPreview({ post, updatePosts }) {
+  const { token } = useContext(AuthContext);
+
+  const handleDeletion = async (e) => {
+    e.preventDefault();
+    await fetch(`${process.env.REACT_APP_API_URL}/posts/${post._id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    updatePosts();
+  };
+
   return (
     <ContentContainer>
       <Flex>
@@ -16,7 +31,7 @@ function PostPreview({ post }) {
             <Heading> {post.title}</Heading>
           </Link>
         </Anchor>
-        <Button>Delete</Button>
+        <Button onClick={handleDeletion}>Delete</Button>
       </Flex>
       <SubHeading>By {post.author}</SubHeading>
       <SubHeading>

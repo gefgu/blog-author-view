@@ -50,8 +50,12 @@ function DashboardPage() {
     return data;
   };
 
-  useEffect(() => {
+  const updatePosts = () => {
     getPosts().then((data) => setPosts(data));
+  };
+
+  useEffect(() => {
+    updatePosts();
 
     return () => setPosts(null);
   }, []);
@@ -68,7 +72,7 @@ function DashboardPage() {
           posts.map((post) => {
             return (
               <div key={post._id}>
-                <PostPreview post={post} />
+                <PostPreview post={post} updatePosts={updatePosts} />
                 <Divider />
               </div>
             );
