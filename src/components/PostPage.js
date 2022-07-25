@@ -1,6 +1,11 @@
 import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Form from "../styled-components/Form";
+import Input from "../styled-components/Input";
+import Label from "../styled-components/Label";
+import OuterWrapper from "../styled-components/OuterWrapper";
+import Textarea from "../styled-components/Textarea";
 
 function PostPage() {
   const postId = useParams().postId;
@@ -14,6 +19,7 @@ function PostPage() {
     let data = await response.json();
 
     data.author = data.author.username;
+    console.log(data);
     return data;
   };
 
@@ -49,7 +55,26 @@ function PostPage() {
     };
   }, []);
 
-  return <h1>Hi!</h1>;
+  return (
+    <OuterWrapper>
+      {post && (
+        <Form>
+          <Label>
+            {" "}
+            Title:
+            <Input name="title" placeholder="Title" value={post?.title} />
+          </Label>
+          <Label>
+            {" "}
+            Content:
+            <Textarea name="content" placeholder="Content">
+              {post?.content}
+            </Textarea>
+          </Label>
+        </Form>
+      )}
+    </OuterWrapper>
+  );
 }
 
 export default PostPage;
