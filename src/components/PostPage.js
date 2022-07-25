@@ -10,6 +10,7 @@ import Label from "../styled-components/Label";
 import OuterWrapper from "../styled-components/OuterWrapper";
 import Textarea from "../styled-components/Textarea";
 import Title from "../styled-components/Title";
+import CommentBox from "./CommentBox";
 
 function PostPage() {
   const { token } = useContext(AuthContext);
@@ -74,7 +75,7 @@ function PostPage() {
       `${publishedDateInput.current.value}T${time.split(":")[0]}:${
         time.split(":")[1]
       }`
-    ).toISO(); // ISO time format
+    ).toISO();
 
     console.log(date);
 
@@ -164,6 +165,19 @@ function PostPage() {
           <Button>Submit</Button>
         </Form>
       )}
+
+      <Header>
+        <Title>Comments</Title>
+      </Header>
+      {comments &&
+        comments.map((comment, index) => (
+          <CommentBox
+            comment={comment}
+            key={index}
+            postId={postId}
+            updateComments={updateComments}
+          />
+        ))}
     </OuterWrapper>
   );
 }
