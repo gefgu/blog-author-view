@@ -9,6 +9,7 @@ import Subtitle from "../styled-components/Subtitle";
 import Title from "../styled-components/Title";
 import Divider from "../styled-components/Divider";
 import PostPreview from "./PostPreview";
+import Heading from "../styled-components/Heading";
 
 function DashboardPage() {
   const { user } = useContext(AuthContext);
@@ -66,7 +67,24 @@ function DashboardPage() {
         <Title>Blog</Title>
         <Subtitle>Thougths, stories and ideas.</Subtitle>
       </Header>
+
       <ContentContainer>
+        <Heading>Drafts</Heading>
+        <Divider />
+        {posts &&
+          posts
+            .filter((post) => !post?.publishedDate)
+            .map((post) => {
+              return (
+                <div key={post._id}>
+                  <PostPreview post={post} updatePosts={updatePosts} />
+                  <Divider />
+                </div>
+              );
+            })}
+      </ContentContainer>
+      <ContentContainer>
+        <Heading>Published or Scheduled Posts</Heading>
         <Divider />
         {posts &&
           posts.map((post) => {
