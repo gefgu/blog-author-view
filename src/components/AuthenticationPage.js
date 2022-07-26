@@ -43,6 +43,7 @@ function AuthenticationPage({ handleLogin }) {
   return (
     <Form onSubmit={handleFormSubmit}>
       <Heading>Log In</Heading>
+      <Paragraph>Try: username: "jeff" and password: "password7" </Paragraph>
       <Input placeholder="Username" name="username" ref={usernameInput} />
       <Input
         placeholder="password"
