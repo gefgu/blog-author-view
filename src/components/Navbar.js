@@ -34,11 +34,6 @@ function Navbar({ logOut }) {
               <Button>Log In</Button>
             </Link>
           </Anchor>
-          <Anchor>
-            <Link to="/signup">
-              <Button>Sign Up</Button>
-            </Link>
-          </Anchor>
         </Flex>
       )}
     </Nav>
